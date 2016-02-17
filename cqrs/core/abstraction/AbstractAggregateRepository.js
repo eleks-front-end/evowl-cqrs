@@ -1,9 +1,18 @@
+import {AbstractEventStoreAdapter} from './AbstractEventStoreAdapter';
 import {NotImplementedError} from '../errors/NotImplementedError';
 
 /**
  * Abstract class to define interface of Aggregate Repository
  */
 export class AbstractAggregateRepository {
+
+    /**
+     *
+     * @param {AbstractEventStoreAdapter} eventStoreAdapter
+     */
+    constructor (eventStoreAdapter) {
+        this._es = eventStoreAdapter;
+    }
 
     /**
      * Asynchronously loads aggregate from EventStore

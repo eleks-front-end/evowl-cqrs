@@ -1,10 +1,31 @@
+import {NotImplementedError} from '../errors/NotImplementedError';
+
 /**
  * Abstract class that describes interface of CqrsEvent
+ * @interface AbstractCqrsEvent
  */
 export class AbstractCqrsEvent {
 
-    constructor (name, data) {
+    /**
+     *
+     * @param {string} name
+     */
+    constructor (name) {
         this._name = name;
-        this._data = data;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get name () {
+        return this._name;
+    }
+
+    /**
+     * serialize event to json object
+     */
+    toJSON () {
+        throw new NotImplementedError('toJSON', 'AbstractCqrsEvent');
     }
 }

@@ -2,19 +2,40 @@ import {AbstractEventStoreAdapter} from './abstraction/AbstractEventStoreAdapter
 import {AbstractAggregateRepository} from './abstraction/AbstractAggregateRepository';
 import {AbstractCommandBus} from './abstraction/AbstractCommandBus';
 import {TypeMismatchError} from './errors/TypeMismatchError';
+import {NotImplementedError} from './errors/NotImplementedError';
 
 /**
  * Represent configuration of certain CQRS node
  */
 export class NodeConfig {
 
+    constructor () {
+        this._features = [];
+    }
+
+    /**
+     * Add new feature to configuration
+     * @param {Feature} feature
+     */
+    addFeature (feature) {
+        this._features.push(feature);
+    }
+
+    /**
+     *
+     * @returns {Array.<Feature>}
+     */
+    get features () {
+        return this._features;
+    }
+
     /**
      * @param {AbstractAggregateRepository} value
      */
     set aggregateRepository (value) {
-        if (!(value instanceof AbstractAggregateRepository)) {
-            throw new TypeMismatchError('AbstractAggregateRepository', value);
-        }
+        //if (!(value instanceof AbstractAggregateRepository)) {
+        //    throw new TypeMismatchError('AbstractAggregateRepository', value);
+        //}
         this._aggregateRepository = value;
     }
 
@@ -30,9 +51,9 @@ export class NodeConfig {
      * @param {AbstractCommandBus} value
      */
     set commandBus (value) {
-        if (!(value instanceof AbstractCommandBus)) {
-            throw new TypeMismatchError('AbstractCommandBus', value);
-        }
+        //if (!(value instanceof AbstractCommandBus)) {
+        //    throw new TypeMismatchError('AbstractCommandBus', value);
+        //}
         this._commandBus = value;
     }
 
@@ -47,9 +68,9 @@ export class NodeConfig {
      * @param {AbstractEventStoreAdapter} value
      */
     set eventStoreAdapter (value) {
-        if (!(value instanceof AbstractEventStoreAdapter)) {
-            throw new TypeMismatchError('AbstractEventStoreAdapter', value);
-        }
+        //if (!(value instanceof AbstractEventStoreAdapter)) {
+        //    throw new TypeMismatchError('AbstractEventStoreAdapter', value);
+        //}
         this._ESAdapter = value;
     }
 
@@ -64,6 +85,6 @@ export class NodeConfig {
      * This method should check consistency of our settigs, to be sure that we have all neded option to run the node
      */
     checkConsistency () {
-
+        throw new NotImplementedError('checkConsistency', 'NodeConfig');
     }
 }
