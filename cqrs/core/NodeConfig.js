@@ -2,11 +2,32 @@ import {AbstractEventStoreAdapter} from './abstraction/AbstractEventStoreAdapter
 import {AbstractAggregateRepository} from './abstraction/AbstractAggregateRepository';
 import {AbstractCommandBus} from './abstraction/AbstractCommandBus';
 import {TypeMismatchError} from './errors/TypeMismatchError';
+import {NotImplementedError} from './errors/NotImplementedError';
 
 /**
  * Represent configuration of certain CQRS node
  */
 export class NodeConfig {
+
+    constructor () {
+        this._features = [];
+    }
+
+    /**
+     * Add new feature to configuration
+     * @param {Feature} feature
+     */
+    addFeature (feature) {
+        this._features.push(feature);
+    }
+
+    /**
+     *
+     * @returns {Array.<Feature>}
+     */
+    get features () {
+        return this._features;
+    }
 
     /**
      * @param {AbstractAggregateRepository} value
@@ -64,6 +85,6 @@ export class NodeConfig {
      * This method should check consistency of our settigs, to be sure that we have all neded option to run the node
      */
     checkConsistency () {
-
+        throw new NotImplementedError('checkConsistency', 'NodeConfig');
     }
 }

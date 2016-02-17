@@ -10,11 +10,21 @@ export class AbstractAggregate {
     /**
      *
      * @param {string} aggregateName
+     * @param {uuid} uuid
      */
-    constuctor (aggregateName) {
+    constuctor (aggregateName, uuid) {
         this._aggregateName = aggregateName;
+        this._uuid = uuid;
         this.version = 0;
         this._uncommittedEvents = [];
+    }
+
+    /**
+     *
+     * @returns {uuid}
+     */
+    get uuid () {
+        return this._uuid;
     }
 
     /**
@@ -66,7 +76,7 @@ export class AbstractAggregate {
         if (!(event instanceof AbstractCqrsEvent)) {
             throw new TypeMismatchError('AbstractCqrsEvent', event);
         }
-        const handlerName = 'on_'+event.name;
+        const handlerName = 'apply_'+event.name;
         if (typeof this[handlerName] !== 'function') {
             throw new UnsupportedCqrsEvent(event.name, this.aggregateName);
         }
