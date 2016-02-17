@@ -7,7 +7,6 @@ export class TempEventStoreAdapter extends AbstractEventStoreAdapter {
         this._store ={};
     }
 
-
     /**
      * Read all events related to certain aggregate
      * @param {uuid} uuid

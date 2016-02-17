@@ -13,6 +13,7 @@ export class TempCommandExecutionResult extends AbstractCommandExecutionResult {
      * @param {TempCommandExecutionSuccess|TempCommandExecutionError} value
      */
     constructor (command, value) {
+        super();
         this._command = command;
         this._value = value;
     }

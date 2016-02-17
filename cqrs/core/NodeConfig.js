@@ -33,9 +33,9 @@ export class NodeConfig {
      * @param {AbstractAggregateRepository} value
      */
     set aggregateRepository (value) {
-        if (!(value instanceof AbstractAggregateRepository)) {
-            throw new TypeMismatchError('AbstractAggregateRepository', value);
-        }
+        //if (!(value instanceof AbstractAggregateRepository)) {
+        //    throw new TypeMismatchError('AbstractAggregateRepository', value);
+        //}
         this._aggregateRepository = value;
     }
 
@@ -51,9 +51,9 @@ export class NodeConfig {
      * @param {AbstractCommandBus} value
      */
     set commandBus (value) {
-        if (!(value instanceof AbstractCommandBus)) {
-            throw new TypeMismatchError('AbstractCommandBus', value);
-        }
+        //if (!(value instanceof AbstractCommandBus)) {
+        //    throw new TypeMismatchError('AbstractCommandBus', value);
+        //}
         this._commandBus = value;
     }
 
@@ -68,9 +68,9 @@ export class NodeConfig {
      * @param {AbstractEventStoreAdapter} value
      */
     set eventStoreAdapter (value) {
-        if (!(value instanceof AbstractEventStoreAdapter)) {
-            throw new TypeMismatchError('AbstractEventStoreAdapter', value);
-        }
+        //if (!(value instanceof AbstractEventStoreAdapter)) {
+        //    throw new TypeMismatchError('AbstractEventStoreAdapter', value);
+        //}
         this._ESAdapter = value;
     }
 

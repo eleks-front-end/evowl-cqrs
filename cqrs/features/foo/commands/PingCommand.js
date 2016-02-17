@@ -15,12 +15,24 @@ export class PingCommand extends AbstractCommand {
         this._byWho = byWho;
     }
 
+    /**
+     *
+     * @returns {string}
+     */
     static get name () {
         return 'foo/ping';
     }
 
-    static create ({requestID, targetID, byWho}) {
-        return new PingCommand(requestID, targetID, byWho);
+    /**
+     * Simple factory that return new instance of the Ping command
+     * @param {string} requestID
+     * @param {uuid} targetID
+     * @param {string} byWho
+     * @returns {PingCommand}
+     */
+    static create (data) {
+        //TODO: rewrite to destructuring assignment (configurate bablejs appropreately)
+        return new PingCommand(data.requestID, data.targetID, data.byWho);
     }
 
     /**

@@ -12,7 +12,7 @@ export class TempAggregateRepository extends AbstractAggregateRepository {
     getByID (aggregate, uuid) {
         return new Promise((resolve, reject) => {
             var agr = new aggregate(uuid);
-            this._es.readAllEvents.then(
+            this._es.readAllEvents(uuid).then(
                 (// on read success
                     eventList => {
                         eventList.forEach(event => agr.applyEvent(event));

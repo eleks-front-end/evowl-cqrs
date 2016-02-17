@@ -2,3 +2,6 @@
 
 # IntelliJ project files
 .idea
+build
+node_modules
+npm-debug.log

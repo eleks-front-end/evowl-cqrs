@@ -25,13 +25,14 @@ export class Application {
     init () {
         const runtime = this.runtime;
         const config = this._config;
+
         runtime.eventStoreAdapter = new config.eventStoreAdapter();
         runtime.aggregateRepository = new config.aggregateRepository(runtime.eventStoreAdapter);
         const commandBus = runtime.commandBus = new config.commandBus(runtime.aggregateRepository);
         const commandFactory = runtime.commandFactory = new CommandFactory();
         config.features.forEach(
             feature => {
-                feature.commandHandlers.forEach(ch => commandBus.registerCommandHandler(ch));
+                feature.commandHandlers.forEach(ch => commandBus.registerCommandHandler(new ch(runtime.aggregateRepository)));
                 feature.commands.forEach(cmd => commandFactory.registerCommand(cmd));
             }
         );

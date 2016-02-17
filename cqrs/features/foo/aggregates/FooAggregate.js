@@ -2,7 +2,7 @@ import {AbstractAggregate} from '../../../core/abstraction/AbstractAggregate';
 import {FooPingedEvent} from './../events/FooPingedEvent';
 import {FooPongAnsweredEvent} from './../events/FooPongAnsweredEvent';
 
-class FooAggregate extends AbstractAggregate {
+export class FooAggregate extends AbstractAggregate {
     static create (uuid) {
         return new FooAggregate(uuid);
     }
@@ -13,15 +13,14 @@ class FooAggregate extends AbstractAggregate {
      */
     constructor (uuid) {
         super('foo', uuid);
-
     }
 
     /**
      * Ping our Foo object
      * @param {uuid} requestID
-     * @param {string} byWHo
+     * @param {string} byWho
      */
-    ping (requestID, byWHo) {
+    ping (requestID, byWho) {
         const fooPinged = new FooPingedEvent(this.uuid, requestID, byWho);
         this.rise(fooPinged);
     }

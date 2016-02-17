@@ -12,7 +12,7 @@ export class AbstractAggregate {
      * @param {string} aggregateName
      * @param {uuid} uuid
      */
-    constuctor (aggregateName, uuid) {
+    constructor (aggregateName, uuid) {
         this._aggregateName = aggregateName;
         this._uuid = uuid;
         this.version = 0;

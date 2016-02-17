@@ -1,5 +1,5 @@
 import {AbstractCommandHandler} from '../../../core/abstraction/AbstractCommandHandler'
-import {FooAggregate} from './foo.aggregate';
+import {FooAggregate} from '../aggregates/FooAggregate';
 import {TempCommandExecutionResult} from '../../../core/temp-implementation/TempCommandExecutionResult';
 import {TempCommandExecutionSuccess} from '../../../core/temp-implementation/TempCommandExecutionSuccess';
 import {TempCommandExecutionError} from '../../../core/temp-implementation/TempCommandExecutionError';
@@ -62,8 +62,8 @@ export class PingCommandHandler extends AbstractCommandHandler {
             ),
             ( // error during loading aggregate from repository
                 error => Promise.reject(new TempCommandExecutionResult(
-                    command,new TempCommandExecutionError(error)
-                ))
+                        command,new TempCommandExecutionError(error)
+                    ))
             )
         );
     }

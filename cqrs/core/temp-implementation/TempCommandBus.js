@@ -15,7 +15,7 @@ export class TempCommandBus extends AbstractCommandBus {
      * (command: AbstractCommand) => Promise
      */
     execute (command) {
-        const ch = this._commandHandlers.find(ch => ch.mathc(command));
+        const ch = this._commandHandlers.find(ch => ch.match(command));
         if (ch === undefined) {
             throw new Error("No command handlers for such command", command);
         }

@@ -6,9 +6,20 @@ import {NotImplementedError} from '../errors/NotImplementedError';
  */
 export class AbstractCqrsEvent {
 
-    constructor (name, data) {
+    /**
+     *
+     * @param {string} name
+     */
+    constructor (name) {
         this._name = name;
-        this._data = data;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get name () {
+        return this._name;
     }
 
     /**
