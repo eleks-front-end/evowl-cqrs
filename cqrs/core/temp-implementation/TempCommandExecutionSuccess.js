@@ -1,4 +1,5 @@
 /**
+ * Temporary implementation
  * Represents success result of command execution
  */
 export class TempCommandExecutionSuccess {

@@ -2,6 +2,10 @@ import {AbstractAggregate} from '../../../core/abstraction/AbstractAggregate';
 import {FooPingedEvent} from './../events/FooPingedEvent';
 import {FooPongAnsweredEvent} from './../events/FooPongAnsweredEvent';
 
+/**
+ * The only one Aggregate of Foo feature
+ * It can be pinged
+ */
 export class FooAggregate extends AbstractAggregate {
     static create (uuid) {
         return new FooAggregate(uuid);
@@ -35,7 +39,7 @@ export class FooAggregate extends AbstractAggregate {
     }
 
     /**
-     * Aplly 'foo_pong_answered' event - doing nothing
+     * Apply 'foo_pong_answered' event - doing nothing
      * @param {FooPongAnsweredEvent} event
      */
     apply_foo_pong_answered (event) {

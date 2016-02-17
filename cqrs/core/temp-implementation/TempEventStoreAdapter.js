@@ -1,5 +1,8 @@
 import {AbstractEventStoreAdapter} from '../abstraction/AbstractEventStoreAdapter';
 
+/**
+ * Temporary implementation of EventStoreAdapter
+ */
 export class TempEventStoreAdapter extends AbstractEventStoreAdapter {
 
     constructor () {

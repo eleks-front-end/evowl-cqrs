@@ -1,6 +1,8 @@
 import {AbstractAggregateRepository} from '../abstraction/AbstractAggregateRepository';
 
-
+/**
+ * Temporary implementation of AggregateRepository in order to show simple example
+ */
 export class TempAggregateRepository extends AbstractAggregateRepository {
     /**
      * Asynchronously loads aggregate from EventStore

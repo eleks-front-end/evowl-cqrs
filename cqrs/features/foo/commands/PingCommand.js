@@ -1,5 +1,8 @@
 import {AbstractCommand} from '../../../core/abstraction/AbstractCommand';
 
+/**
+ * Ping command class
+ */
 export class PingCommand extends AbstractCommand {
 
     /**

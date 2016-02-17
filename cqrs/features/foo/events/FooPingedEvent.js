@@ -1,8 +1,7 @@
 import {AbstractCqrsEvent}  from '../../../core/abstraction/AbstractCqrsEvent';
 
 /**
- * @class
- * @implements {AbstractCqrsEvent}
+ * Foo Pinged event class
  */
 export class FooPingedEvent extends AbstractCqrsEvent {
 

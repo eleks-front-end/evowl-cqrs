@@ -5,6 +5,10 @@ import {NotImplementedError} from '../errors/NotImplementedError';
  */
 export class AbstractCommand {
 
+    /**
+     *
+     * @param {string} name
+     */
     constructor (name) {
         this._name = name;
     }

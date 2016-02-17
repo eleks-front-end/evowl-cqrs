@@ -1,5 +1,8 @@
 import {AbstractCqrsEvent}  from '../../../core/abstraction/AbstractCqrsEvent';
 
+/**
+ * FooPongAnswered event class
+ */
 export class FooPongAnsweredEvent extends AbstractCqrsEvent {
 
     /**

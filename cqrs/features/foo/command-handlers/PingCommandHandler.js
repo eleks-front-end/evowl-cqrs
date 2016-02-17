@@ -4,6 +4,9 @@ import {TempCommandExecutionResult} from '../../../core/temp-implementation/Temp
 import {TempCommandExecutionSuccess} from '../../../core/temp-implementation/TempCommandExecutionSuccess';
 import {TempCommandExecutionError} from '../../../core/temp-implementation/TempCommandExecutionError';
 
+/**
+ * Command handler of Ping command
+ */
 export class PingCommandHandler extends AbstractCommandHandler {
 
     /**

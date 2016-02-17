@@ -3,6 +3,7 @@ import {TempCommandExecutionError} from './TempCommandExecutionError';
 import {TempCommandExecutionSuccess} from './TempCommandExecutionSuccess';
 
 /**
+ * Temporary implementation.
  * Represent result of command execution. Can hold both success and error.
  */
 export class TempCommandExecutionResult extends AbstractCommandExecutionResult {
