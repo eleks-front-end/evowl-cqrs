@@ -11,6 +11,15 @@ export class NodeConfig {
 
     constructor () {
         this._features = [];
+        this._aggregateRepository = null;
+        this._commandBus = null;
+        this._ESAdapter = null;
+        this._queryBus = null;
+        this._viewRepository = null;
+        this._eventBus = null;
+        this._rabbitMQConnector = null;
+        this._rabbitMQHost = null;
+        this._commandBusExchange = null;
     }
 
     /**
@@ -127,6 +136,54 @@ export class NodeConfig {
      */
     get eventBus () {
         return this._eventBus;
+    }
+
+    /**
+     *
+     * @param {RabbitMQConnector} value
+     */
+    set rabbitMQConnector (value) {
+        this._rabbitMQConnector = value;
+    }
+
+    /**
+     *
+     * @type {RabbitMQConnector}
+     */
+    get rabbitMQConnector () {
+        return this._rabbitMQConnector;
+    }
+
+    /**
+     *
+     * @param {string} value
+     */
+    set rabbitMQHost (value) {
+        this._rabbitMQHost = value;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get rabbitMQHost () {
+        return this._rabbitMQHost;
+    }
+
+    /**
+     *
+     * @param {string} value
+     */
+    set commandBusExchange (value) {
+        this._commandBusExchange = value;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get commandBusExchange () {
+        return this._commandBusExchange;
     }
 
     /**

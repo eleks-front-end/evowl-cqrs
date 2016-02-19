@@ -1,3 +1,5 @@
+import {NotImplementedError} from '../errors/NotImplementedError';
+
 /**
  * Abstract class describes Denormalizer interface
  */
@@ -12,4 +14,13 @@ export class AbstractDenormalizer {
         this._name = name;
         this._vr = viewRepository;
     }
+
+    static get name () {
+        throw new NotImplementedError('getter/name', 'AbstractDenormalizer');
+    }
+
+    get eventHandlers () {
+        throw new NotImplementedError('getter/eventHandlers', 'AbstractDenormalizer');
+    }
+
 }

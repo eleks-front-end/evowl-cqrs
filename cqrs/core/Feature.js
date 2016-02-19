@@ -39,7 +39,7 @@ export class Feature {
 
     /**
      * Add aggregator class (constructor) to feature
-     * @param {AbstractAggregator} aggregateCtor
+     * @param {AbstractAggregate} aggregateCtor
      */
     addAggregate (aggregateCtor) {
         this._aggregates.push(aggregateCtor);
@@ -65,7 +65,7 @@ export class Feature {
 
     /**
      * Add command class (constructor) to feature
-     * @param {AbstractCommand} commandCtor
+     * @param {AbstractCqrsCommand} commandCtor
      */
     addCommand (commandCtor) {
         this._queries.push(commandCtor);
@@ -74,7 +74,7 @@ export class Feature {
 
     /**
      *
-     * @returns {Array.<AbstractCommand>}
+     * @returns {Array.<AbstractCqrsCommand>}
      */
     get commands () {
         return this._queries;

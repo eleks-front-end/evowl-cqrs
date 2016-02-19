@@ -13,13 +13,13 @@ export class PingCommandHandler extends AbstractCommandHandler {
      * @param {AbstractAggregateRepository} aggregateRepository
      */
     constructor (aggregateRepository) {
-        super(aggregateRepository, 'foo/ping');
+        super(aggregateRepository, 'foo.ping');
     }
 
     /**
      * Execute command async and return object of execution result
      *
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      * @returns {Promise<AbstractCommandExecutionResult>}
      */
     execute (command) {

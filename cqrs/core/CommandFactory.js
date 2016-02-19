@@ -8,11 +8,17 @@ export class CommandFactory {
     }
 
     /**
-     * Register new command class (constructor) in command factory
-     * @param {AbstractCommand} commandCtor
+     * Create new command object
+     * @param {string} name
+     * @param {object} data
+     * @returns {AbstractCqrsCommand}
      */
-    registerCommand (commandCtor) {
-        this._queries[commandCtor.name] = commandCtor;
+    create (name, data) {
+        if (!this.isCommand(name)) {
+            // TODO: write custom error
+            throw new Error(`Command ${name} not registered in this node`);
+        }
+        return this._queries[name].create(data);
     }
 
     /**
@@ -25,16 +31,14 @@ export class CommandFactory {
     }
 
     /**
-     * Create new command object
-     * @param {string} name
-     * @param {object} data
-     * @returns {AbstractCommand}
+     * Register new command class (constructor) in command factory
+     * @param {AbstractCqrsCommand} commandCtor
      */
-    create (name, data) {
-        if (!this.isCommand(name)) {
-            // TODO: write custom error
-            throw new Error(`Command ${name} not registered in this node`);
-        }
-        return this._queries[name].create(data);
+    registerCommand (commandCtor) {
+        this._queries[commandCtor.name] = commandCtor;
+    }
+
+    restore (serializedCmd) {
+        return this.create(serializedCmd.name, serializedCmd.data);
     }
 }

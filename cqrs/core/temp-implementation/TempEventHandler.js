@@ -1,10 +1,10 @@
-import {AbstractEventHandler} from '../abstraction/AbstractEventHandler';
+import {AbstractCqrsEventHandler} from '../abstraction/AbstractCqrsEventHandler';
 
 
 /**
  * Temporary implementation of Event Handler
  */
-export class TempEventHandler extends AbstractEventHandler {
+export class TempEventHandler extends AbstractCqrsEventHandler {
 
     /**
      *

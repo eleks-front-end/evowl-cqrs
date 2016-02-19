@@ -8,7 +8,7 @@ export class AbstractCommandExecutionResult {
     /**
      * @returns {*}
      */
-    get result () {
+    get data () {
         throw new NotImplementedError('isSuccess', 'AbstractCommandExecutionResult');
     }
 

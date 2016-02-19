@@ -1,5 +1,5 @@
 import {AbstractEventBus}  from  '../abstraction/AbstractEventBus';
-import {AbstractEventHandler}  from  '../abstraction/AbstractEventHandler';
+import {AbstractCqrsEventHandler}  from  '../abstraction/AbstractCqrsEventHandler';
 import {AbstractCqrsEvent}  from  '../abstraction/AbstractCqrsEvent';
 import {TypeMismatchError}  from  '../errors/TypeMismatchError';
 
@@ -26,11 +26,11 @@ export class TempEventBus extends AbstractEventBus {
 
     /**
      * Register event handler in event bus
-     * @param {AbstractEventHandler} eventHandler
+     * @param {AbstractCqrsEventHandler} eventHandler
      */
     registerEventHandler (eventHandler) {
-        if (!(eventHandler instanceof AbstractEventHandler)) {
-            throw new TypeMismatchError('AbstractEventHandler', eventHandler)
+        if (!(eventHandler instanceof AbstractCqrsEventHandler)) {
+            throw new TypeMismatchError('AbstractCqrsEventHandler', eventHandler)
         }
         this._eventHandlers.push(eventHandler);
     }

@@ -20,10 +20,19 @@ export class AbstractCommandHandler {
     }
 
     /**
+     * Return pattern to match command that this CommandHandler can execute
+     * Usually it is exact command name
+     * @type {string}
+     */
+    get pattern () {
+        return this._commandName;
+    }
+
+    /**
      * Check if command can be executed by this command handler.
      * This method is used by CommandBus during command routing
      *
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      * @returns {boolean}
      */
     match (command) {
@@ -36,7 +45,7 @@ export class AbstractCommandHandler {
     /**
      * Execute command async and return object of execution result
      *
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      * @returns {Promise<AbstractCommandExecutionResult>}
      */
     execute (command) {

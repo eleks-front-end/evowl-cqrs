@@ -20,11 +20,21 @@ export class Application {
         this.runtime = {
             denormalizers: {}
         };
+        this._ready = null;
+    }
+
+    /**
+     * Promise that will be resolved when application ready
+     * @returns {null|Promise.<RabbitMQConnector>|*}
+     */
+    get ready () {
+        return this._ready;
     }
 
     /**
      * Initialize our application
      * Here is all bootstraping are going on
+     * @returns {Promise} Ready promise
      */
     init () {
         const runtime = this.runtime;
@@ -34,27 +44,45 @@ export class Application {
         runtime.eventStoreAdapter = new config.eventStoreAdapter(eventBus);
         const aggregateRepository = runtime.aggregateRepository = new config.aggregateRepository(runtime.eventStoreAdapter);
         const viewRepository = runtime.viewRepository = new config.viewRepository();
-        const commandBus = runtime.commandBus = new config.commandBus();
-        const queryBus = runtime.queryBus = new config.queryBus();
+        const rabbitMQConnector = new config.rabbitMQConnector({host: config.rabbitMQHost});
+
 
         const commandFactory = runtime.commandFactory = new CommandFactory();
         const queryFactory = runtime.queryFactory = new QueryFactory();
-        config.features.forEach(
-            feature => {
-                //commands
-                feature.commandHandlers.forEach(ch => commandBus.registerCommandHandler(new ch(aggregateRepository)));
-                feature.commands.forEach(cmd => commandFactory.registerCommand(cmd));
+        let commandBus;
+        let queryBus;
 
-                //queries
-                feature.queryHandlers.forEach(qh => queryBus.register(new qh(viewRepository)));
-                feature.queries.forEach(qvr => queryFactory.register(qvr));
+        this._ready = rabbitMQConnector.connect().then(() => {
+            commandBus = runtime.commandBus = new config.commandBus(
+                rabbitMQConnector,
+                config.commandBusExchange,
+                commandFactory
+            );
+            return commandBus.ready;
+        }).then(() => {
+            queryBus = runtime.queryBus = new config.queryBus();
 
-                feature.denormalizers.forEach(dn => {
-                    runtime.denormalizers[dn.name] = new dn(viewRepository);
-                    runtime.denormalizers[dn.name].eventHandlers.forEach(eh => eventBus.registerEventHandler(eh))
-                });
-            }
-        );
+            config.features.forEach(
+                feature => {
+                    //commands
+                    feature.commandHandlers.forEach(ch => commandBus.registerCommandHandler(new ch(aggregateRepository)));
+                    feature.commands.forEach(cmd => commandFactory.registerCommand(cmd));
+
+                    //queries
+                    feature.queryHandlers.forEach(qh => queryBus.register(new qh(viewRepository)));
+                    feature.queries.forEach(qvr => queryFactory.register(qvr));
+
+                    feature.denormalizers.forEach(dn => {
+                        runtime.denormalizers[dn.name] = new dn(viewRepository);
+                        runtime.denormalizers[dn.name].eventHandlers.forEach(eh => eventBus.registerEventHandler(eh))
+                    });
+                }
+            );
+        });
+
+
+
+        return this._ready;
     }
 
     /**
