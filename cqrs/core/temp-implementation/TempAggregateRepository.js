@@ -22,10 +22,16 @@ export class TempAggregateRepository extends AbstractAggregateRepository {
                     }
                 ),
                 (// error during read operation
-                    error => console.log('', error)
+                    error => {
+                        console.log('Error during read operation', error)
+                        console.log(error.stack);
+                    }
                 )
             ).catch( // error during apply event to aggregate
-                error => console.log(error)
+                error => {
+                    console.log('Error during apply event to aggregate', error);
+                    console.log(error.stack);
+                }
             );
         });
     }

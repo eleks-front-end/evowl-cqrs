@@ -7,24 +7,26 @@ export class FooPongAnsweredEvent extends AbstractCqrsEvent {
 
     /**
      *
+     * @param {timestamp} dt
      * @param {uuid} aggregateID
      * @param {uuid} requestID
      * @param {string} forWho
      */
-    constructor (aggregateID, requestID, forWho) {
+    constructor (requestID, dt, answer) {
         super('foo_pong_answered');
-        this._aggregateID = aggregateID;
         this._requestID = requestID;
-        this._forWho = forWho;
+        this._dt = dt;
+        this._answer = answer;
     }
 
     /**
      *
-     * @returns {uuid}
+     * @returns {timestamp}
      */
-    get aggregateID () {
-        return this._aggregateID;
+    get dt () {
+        return this._dt;
     }
+
 
     /**
      *
@@ -38,19 +40,19 @@ export class FooPongAnsweredEvent extends AbstractCqrsEvent {
      *
      * @returns {string}
      */
-    get forWho () {
-        return this._forWho;
+    get answer () {
+        return this._answer;
     }
 
     /**
      *
-     * @returns {{aggregateID: uuid, requestID: uuid, forWho: string}}
+     * @returns {{dt: timestamp, aggregateID: uuid, requestID: uuid, forWho: string}}
      */
     toJSON () {
         return {
-            aggregateID: this.aggregateID,
+            dt: this.dt,
             requestID: this.requestID,
-            forWho: this.forWho
+            answer: this.answer
         }
     }
 }

@@ -34,7 +34,7 @@ export class FooAggregate extends AbstractAggregate {
      * @param {FooPingedEvent} event
      */
     apply_foo_pinged (event) {
-        const fooPongAnswered = new FooPongAnsweredEvent(this.uuid, event.requestID, event.byWho);
+        const fooPongAnswered = new FooPongAnsweredEvent(event.requestID, new Date().getTime(), `Hi ${event.byWho}`);
         this.rise(fooPongAnswered);
     }
 

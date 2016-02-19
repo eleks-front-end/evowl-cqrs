@@ -14,8 +14,11 @@ export class Feature {
 
         this._aggregates = [];
         this._commandHandlers = [];
-        this._commands = [];
+        this._queryHandlers = [];
+        this._queries = [];
         this._events = [];
+        this._queries = [];
+        this._denormalizers = [];
     }
 
     /**
@@ -65,12 +68,16 @@ export class Feature {
      * @param {AbstractCommand} commandCtor
      */
     addCommand (commandCtor) {
-        this._commands.push(commandCtor);
+        this._queries.push(commandCtor);
         return this;
     }
 
+    /**
+     *
+     * @returns {Array.<AbstractCommand>}
+     */
     get commands () {
-        return this._commands;
+        return this._queries;
     }
 
     /**
@@ -82,4 +89,54 @@ export class Feature {
         return this;
     }
 
+    /**
+     * Add query handler class (constructor) to configuration
+     * @param {AbstractQueryHandler} handlerCtor
+     */
+    addQueryHandler (handlerCtor) {
+        this._queryHandlers.push(handlerCtor);
+        return this;
+    }
+
+    /**
+     *
+     * @returns {Array.<AbstractQueryHandler>}
+     */
+    get queryHandlers () {
+        return this._queryHandlers;
+    }
+
+    /**
+     * Add query class (constructor) to configuration
+     * @param {AbstractQuery} query
+     */
+    addQuery (query) {
+        this._queries.push(query);
+        return this;
+    }
+
+    /**
+     *
+     * @returns {Array.<AbstractQuery>}
+     */
+    get queries () {
+        return this._queries;
+    }
+
+    /**
+     * Add denormalizer class (constructor) to feature
+     * @param {AbstractDenormalizer} denormalizerCtor
+     */
+    addDenormalizer (denormalizerCtor) {
+        this._denormalizers.push(denormalizerCtor);
+        return this;
+    }
+
+    /**
+     *
+     * @returns {Array.<AbstractDenormalizer>}
+     */
+    get denormalizers () {
+        return this._denormalizers;
+    }
 }

@@ -82,6 +82,54 @@ export class NodeConfig {
     }
 
     /**
+     *
+     * @param {AbstractQueryBus} value
+     */
+    set queryBus (value) {
+        this._queryBus = value;
+    }
+
+    /**
+     *
+     * @returns {AbstractQueryBus}
+     */
+    get queryBus () {
+        return this._queryBus;
+    }
+
+    /**
+     *
+     * @param {AbstractViewRepository} value
+     */
+    set viewRepository (value) {
+        this._viewRepository = value;
+    }
+
+    /**
+     *
+     * @returns {AbstractViewRepository}
+     */
+    get viewRepository () {
+        return this._viewRepository;
+    }
+
+    /**
+     *
+     * @param {AbstractEventBus} value
+     */
+    set eventBus (value) {
+        this._eventBus = value;
+    }
+
+    /**
+     *
+     * @returns {AbstractEventBus}
+     */
+    get eventBus () {
+        return this._eventBus;
+    }
+
+    /**
      * This method should check consistency of our settigs, to be sure that we have all neded option to run the node
      */
     checkConsistency () {
