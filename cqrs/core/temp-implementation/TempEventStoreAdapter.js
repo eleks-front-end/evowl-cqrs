@@ -5,8 +5,13 @@ import {AbstractEventStoreAdapter} from '../abstraction/AbstractEventStoreAdapte
  */
 export class TempEventStoreAdapter extends AbstractEventStoreAdapter {
 
-    constructor () {
+    /**
+     *
+     * @param {TempEventBus} eventBus
+     */
+    constructor (eventBus) {
         super();
+        this._eventBus = eventBus;
         this._store ={};
     }
 
@@ -62,8 +67,9 @@ export class TempEventStoreAdapter extends AbstractEventStoreAdapter {
                 throw new Error("Aggregate's version mismatch");
             }
             eventList.forEach((event) => {
-                aggregateData.events.push();
+                aggregateData.events.push(event);
                 aggregateData.version++;
+                this._eventBus.push(event);
             });
             resolve(true);
         });

@@ -4,7 +4,7 @@
 export class CommandFactory {
 
     constructor () {
-        this._commands = {};
+        this._queries = {};
     }
 
     /**
@@ -12,7 +12,7 @@ export class CommandFactory {
      * @param {AbstractCommand} commandCtor
      */
     registerCommand (commandCtor) {
-        this._commands[commandCtor.name] = commandCtor;
+        this._queries[commandCtor.name] = commandCtor;
     }
 
     /**
@@ -21,7 +21,7 @@ export class CommandFactory {
      * @returns {boolean}
      */
     isCommand (name) {
-        return this._commands[name] ? true : false;
+        return this._queries[name] ? true : false;
     }
 
     /**
@@ -35,6 +35,6 @@ export class CommandFactory {
             // TODO: write custom error
             throw new Error(`Command ${name} not registered in this node`);
         }
-        return this._commands[name].create(data);
+        return this._queries[name].create(data);
     }
 }

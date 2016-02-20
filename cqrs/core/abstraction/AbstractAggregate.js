@@ -53,6 +53,7 @@ export class AbstractAggregate {
      * @param {AbstractCqrsEvent} event
      */
     rise (event) {
+        this._uncommittedEvents.push(event);
         try {
             this.applyEvent(event);
         }
@@ -65,7 +66,6 @@ export class AbstractAggregate {
                     throw e;
             }
         }
-        this._uncommittedEvents.push(event);
     }
 
     /**
@@ -80,5 +80,6 @@ export class AbstractAggregate {
         if (typeof this[handlerName] !== 'function') {
             throw new UnsupportedCqrsEvent(event.name, this.aggregateName);
         }
+        this[handlerName].call(this, event);
     }
 }
