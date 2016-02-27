@@ -10,10 +10,12 @@ export class MessageBusReceiver {
      * Creates a new RabbitMQ connection
      * @param {string} host
      * @param {string} exchangerName
+     * @param {TempEventFactory} eventFactory
      */
-	constructor (host, exchangerName) {
+	constructor (host, exchangerName, eventFactory) {
 		this._host = host;
 		this._exchangerName = exchangerName;
+		this._eventFactory = eventFactory;
 
 		this._eventBusConnection = new Promise((resolve, reject) => {
 			amqp.connect(this._host, (err, conn) => {
@@ -43,13 +45,12 @@ export class MessageBusReceiver {
 		});
 	}
 
-    /**
+	/**
      * Subscribes on a RabbitMQ queue with corresponding key, 
      * invokes callback when message is delivered
-     * @param {string} key
-     * @param {Function} callback
+	 * @param {DenormalizerConfig} denormConfig
      */
-	_subscribe (key, callback) {
+	subscribe (denormConfig) {
 		this._createNewChannel().then(channel => {
 			channel.assertExchange(this._exchangerName, 'direct', {durable: false});
 
@@ -58,14 +59,27 @@ export class MessageBusReceiver {
 					throw new Error('Cannot assert to queue: ' + err);
 				}
 
+				//give only one message to the worker at a time (waits channel.ack())
+				channel.prefetch(1);
+
   				//TODO remove
 				console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", q.queue);
-				channel.bindQueue(q.queue, this._exchangerName, key);
+
+				for(let eventName of denormConfig.eventsToListenIterator) {
+					channel.bindQueue(q.queue, this._exchangerName, eventName);
+				}
 
 				channel.consume(q.queue, msg => {
-					callback(msg);
-					//tells RabbitMQ to proceed with the rest of the messages
-					channel.ack(msg);
+					let eventObj = this._eventFactory.restore(msg.content.toString());
+
+					for(let handler of denormConfig.handlersIterator) {
+						if(handler.matchEvent(eventObj)) {
+								handler.handle(eventObj).then(() => {
+								//tells RabbitMQ to proceed with the rest of the messages
+								channel.ack(msg);
+							});
+						}
+					}
 				}, {noAck: false});
 			});
 		});

@@ -14,36 +14,39 @@ export class MessageBusPublisher {
 	constructor (host, exchangerName) {
 		this._host = host;
 		this._exchangerName = exchangerName;
+		this.channel = null;
 
-		this._messageBusChannel = new Promise((resolve, reject) => {
-			amqp.connect(host, (err, conn) => {
+		amqp.connect(host, (err, conn) => {
+			if(err) {
+				throw new Error('Connection error: ' + err);
+			}
+			conn.createChannel((err, ch) => {
 				if(err) {
-					throw new Error('Connection error: ' + err);
+					throw new Error('Cannot create channel: ' + err);
 				}
-				conn.createChannel((err, channel) => {
-					if(err) {
-						throw new Error('Cannot create channel: ' + err);
-					}
-					channel.assertExchange(exchangerName, 'direct', {durable: false});
-					resolve(channel);
-  				});
-  				//TODO remove
-  				setTimeout(function() { conn.close(); process.exit(0) }, 500);
-			});
+				ch.assertExchange(exchangerName, 'direct', {durable: false});
+				this.channel = ch;
+  			});
+  			//TODO remove
+  			setTimeout(function() { conn.close(); process.exit(0) }, 2000);
 		});
-	};
+	}
 
-    /**
+	get isConnected () {
+		return !!this.channel;
+	}
+
+	/**
      * Publishes message to the messageBus, routes to corresponding queue by a key
      * @param {string} key
      * @param {string} message
      */
-	_publish (key, message) {
-		var self = this;
-		this._messageBusChannel.then(channel => {
-    		channel.publish(self._exchangerName, key, new Buffer(message));
-    		//TODO remove
-    		console.log("[x] Sent %s with key %s", message, key);
-		});
-	};
+	publish (eventInstance) {
+		if(!this.isConnected)
+			throw new Error('Channel is not yet created');
+		
+		this.channel.publish(this._exchangerName, eventInstance.name, new Buffer(eventInstance.serialize()));
+    	//TODO remove
+    	console.log("[x] Sent %s with key %s", 'mess', eventInstance.name);
+	}
 }

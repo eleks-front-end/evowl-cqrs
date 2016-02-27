@@ -1,12 +1,18 @@
 import {MessageBusReceiver} from './MessageBusReceiver';
+import {DenormalizerConfig} from './DenormalizerConfig';
+import {TempEventFactory} from './TempEventFactory';
+import {EventHandlerMock} from './EventHandlerMock';
 
 //requires a RabbitMQ server to be installed and running on localhost on standard port (5672)
-var receiver = new MessageBusReceiver('amqp://localhost', 'eventExchanger');
+var receiver = new MessageBusReceiver('amqp://localhost', 'eventExchanger', new TempEventFactory());
 
-receiver._subscribe('event_1', message => {
-	console.log("[x] Recieved %s with key event_1", message.content.toString());
-});
+var handler1 = new EventHandlerMock('event_1');
+var handler2 = new EventHandlerMock('event_2');
 
-receiver._subscribe('event_2', message => {
-	console.log("[x] Recieved %s with key event_1", message.content.toString());
-});
+var denormConfig = new DenormalizerConfig('eventExchanger');
+denormConfig.addEventToListen('event_1');
+denormConfig.addEventToListen('event_2');
+denormConfig.addHandler(handler1);
+denormConfig.addHandler(handler2);
+
+receiver.subscribe(denormConfig);
