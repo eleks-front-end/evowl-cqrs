@@ -1,5 +1,3 @@
-#!/usr/bin/env node --use_strict
-
 import {Application} from './core/Application';
 import {NodeConfig} from './core/NodeConfig';
 import {TempEventStoreAdapter} from './core/temp-implementation/TempEventStoreAdapter';

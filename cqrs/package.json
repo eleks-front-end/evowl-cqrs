@@ -4,8 +4,8 @@
   "description": "CQRS part of the EVOWL project",
   "main": "loader.js",
   "scripts": {
-    "build": "rm -rf build; babel . --ignore node_modules -d build",
-    "builded": "./build/temp-loader.js",
+    "build": "rimraf build; babel . --ignore node_modules -d build",
+    "builded": "node ./build/temp-loader.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,6 +26,7 @@
   "devDependencies": {
     "babel-cli": "^6.5.1",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2"
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2",
+    "rimraf": "^2.5.2"
   }
 }
