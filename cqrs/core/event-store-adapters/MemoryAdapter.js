@@ -36,8 +36,7 @@ class MemoryAdapter extends AbstractEventStoreAdapter {
     _registerNewAggregate () {
         this._aggregates[uuid] = {
             uuid: uuid,
-            version: 0,
-            events: []
+            version: 0
         };
     }
 
