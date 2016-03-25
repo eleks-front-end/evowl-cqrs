@@ -4,30 +4,30 @@
 export class CommandFactory {
 
     constructor () {
-        this._queries = {};
+        this._commandsDict = {};
     }
 
     /**
      * Create new command object
-     * @param {string} name
+     * @param {string} cmd
      * @param {object} data
      * @returns {AbstractCqrsCommand}
      */
-    create (name, data) {
-        if (!this.isCommand(name)) {
+    create (cmd, data) {
+        if (!this.isCommand(cmd)) {
             // TODO: write custom error
-            throw new Error(`Command ${name} not registered in this node`);
+            throw new Error(`Command ${cmd} not registered in this node`);
         }
-        return this._queries[name].create(data);
+        return this._commandsDict[cmd].create(data);
     }
 
     /**
-     * Check if command with specific name registered in factory
-     * @param {string} name
+     * Check if command with specific cmd registered in factory
+     * @param {string} cmd
      * @returns {boolean}
      */
-    isCommand (name) {
-        return this._queries[name] ? true : false;
+    isCommand (cmd) {
+        return this._commandsDict[cmd] ? true : false;
     }
 
     /**
@@ -35,10 +35,10 @@ export class CommandFactory {
      * @param {AbstractCqrsCommand} commandCtor
      */
     registerCommand (commandCtor) {
-        this._queries[commandCtor.name] = commandCtor;
+        this._commandsDict[commandCtor.cmd] = commandCtor;
     }
 
     restore (serializedCmd) {
-        return this.create(serializedCmd.name, serializedCmd.data);
+        return this.create(serializedCmd.cmd, serializedCmd.data);
     }
 }

@@ -1,9 +1,5 @@
 #!/usr/bin/env node --use_strict
 
-//RabbitMQ configuration options
-const rabbitMQHost = 'amqp://localhost';
-const rabbitMQExchange = 'command-bus-tmp1';
-
 import {Application} from './core/Application';
 import {NodeConfig} from './core/NodeConfig';
 
@@ -17,31 +13,51 @@ import {TempEventBus} from './core/temp-implementation/TempEventBus';
 // Stable implementation
 import {RabbitMQConnector} from './core/rabbit-mq-rpc/RabbitMQConnector';
 import {CommandBusRabbitMQRPC as CommandBus} from './core/CommandBusRabbitMQRPC';
+import {Logger, LogFactory} from './core/logger/';
 
 import {fooFeature} from './features/foo/';
 
 
+import {config} from './config/dev';
+
+// Configure our logger
+const logger = new Logger();
+if (!config.logger) {
+    throw new Error('No logger section in config');
+}
+
+config.logger.forEach(item => {
+    logger.registerHandler(
+        LogFactory.filter(item.filter.type),
+        LogFactory.formatter(item.formatter.type),
+        LogFactory.writer(item.writer.type, item.writer.options)
+    );
+
+});
 
 //Configure our node
-const config = new NodeConfig();
+const nodeConfig = new NodeConfig();
+
+nodeConfig.logger = logger;
+
 
 // Use Temp implementations of EventStoreAdapter, AggregateRepository, CommandBus
-config.eventStoreAdapter = TempEventStoreAdapter;
-config.aggregateRepository = TempAggregateRepository;
+nodeConfig.eventStoreAdapter = TempEventStoreAdapter;
+nodeConfig.aggregateRepository = TempAggregateRepository;
 
 //TODO: move it to configuration file or some other configuration system
-config.rabbitMQHost = rabbitMQHost;
-config.commandBusExchange = rabbitMQExchange;
-config.rabbitMQConnector = RabbitMQConnector;
-config.commandBus = CommandBus;
+nodeConfig.rabbitMQHost = config.rabbitMQHost;
+nodeConfig.commandBusExchange = config.commandBusExchange;
+nodeConfig.rabbitMQConnector = RabbitMQConnector;
+nodeConfig.commandBus = CommandBus;
 
-config.viewRepository = TempViewRepository;
-config.queryBus = TempQueryBus;
-config.eventBus = TempEventBus;
-config.addFeature(fooFeature);
+nodeConfig.viewRepository = TempViewRepository;
+nodeConfig.queryBus = TempQueryBus;
+nodeConfig.eventBus = TempEventBus;
+nodeConfig.addFeature(fooFeature);
 
 //Instantiate our application
-const app = new Application(config);
+const app = new Application(nodeConfig);
 app.init().then(() => {
 
     //Hack: push data to store

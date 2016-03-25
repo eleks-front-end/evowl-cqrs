@@ -16,7 +16,7 @@ export class AbstractDenormalizer {
     }
 
     static get name () {
-        throw new NotImplementedError('getter/name', 'AbstractDenormalizer');
+        throw new NotImplementedError('getter/cmd', 'AbstractDenormalizer');
     }
 
     get eventHandlers () {

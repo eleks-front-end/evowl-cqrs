@@ -20,22 +20,7 @@ export class NodeConfig {
         this._rabbitMQConnector = null;
         this._rabbitMQHost = null;
         this._commandBusExchange = null;
-    }
-
-    /**
-     * Add new feature to configuration
-     * @param {Feature} feature
-     */
-    addFeature (feature) {
-        this._features.push(feature);
-    }
-
-    /**
-     *
-     * @returns {Array.<Feature>}
-     */
-    get features () {
-        return this._features;
+        this._logger = null;
     }
 
     /**
@@ -53,6 +38,30 @@ export class NodeConfig {
      */
     get aggregateRepository () {
         return this._aggregateRepository;
+    }
+
+    /**
+     *
+     * @param {string} value
+     */
+    set commandBusExchange (value) {
+        this._commandBusExchange = value;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get commandBusExchange () {
+        return this._commandBusExchange;
+    }
+
+    /**
+     *
+     * @returns {Array.<Feature>}
+     */
+    get features () {
+        return this._features;
     }
 
 
@@ -74,6 +83,22 @@ export class NodeConfig {
     }
 
     /**
+     *
+     * @param {AbstractEventBus} value
+     */
+    set eventBus (value) {
+        this._eventBus = value;
+    }
+
+    /**
+     *
+     * @returns {AbstractEventBus}
+     */
+    get eventBus () {
+        return this._eventBus;
+    }
+
+    /**
      * @param {AbstractEventStoreAdapter} value
      */
     set eventStoreAdapter (value) {
@@ -92,6 +117,22 @@ export class NodeConfig {
 
     /**
      *
+     * @param {Logger} value
+     */
+    set logger (value) {
+        this._logger = value;
+    }
+
+    /**
+     *
+     * @returns {Logger}
+     */
+    get logger () {
+        return this._logger;
+    }
+
+    /**
+     *
      * @param {AbstractQueryBus} value
      */
     set queryBus (value) {
@@ -104,38 +145,6 @@ export class NodeConfig {
      */
     get queryBus () {
         return this._queryBus;
-    }
-
-    /**
-     *
-     * @param {AbstractViewRepository} value
-     */
-    set viewRepository (value) {
-        this._viewRepository = value;
-    }
-
-    /**
-     *
-     * @returns {AbstractViewRepository}
-     */
-    get viewRepository () {
-        return this._viewRepository;
-    }
-
-    /**
-     *
-     * @param {AbstractEventBus} value
-     */
-    set eventBus (value) {
-        this._eventBus = value;
-    }
-
-    /**
-     *
-     * @returns {AbstractEventBus}
-     */
-    get eventBus () {
-        return this._eventBus;
     }
 
     /**
@@ -172,18 +181,26 @@ export class NodeConfig {
 
     /**
      *
-     * @param {string} value
+     * @param {AbstractViewRepository} value
      */
-    set commandBusExchange (value) {
-        this._commandBusExchange = value;
+    set viewRepository (value) {
+        this._viewRepository = value;
     }
 
     /**
      *
-     * @returns {string}
+     * @returns {AbstractViewRepository}
      */
-    get commandBusExchange () {
-        return this._commandBusExchange;
+    get viewRepository () {
+        return this._viewRepository;
+    }
+
+    /**
+     * Add new feature to configuration
+     * @param {Feature} feature
+     */
+    addFeature (feature) {
+        this._features.push(feature);
     }
 
     /**

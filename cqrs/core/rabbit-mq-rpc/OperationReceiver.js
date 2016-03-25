@@ -23,7 +23,7 @@ export class OperationReceiver {
     }
 
     /**
-     * Generate name for channel based on pattern
+     * Generate cmd for channel based on pattern
      * @param {string} pattern
      * @returns {string}
      * @protected

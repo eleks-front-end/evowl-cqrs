@@ -4,7 +4,7 @@
 export class QueryFactory {
 
     constructor () {
-        this._queries = {};
+        this._commandsDict = {};
     }
 
     /**
@@ -12,16 +12,16 @@ export class QueryFactory {
      * @param {AbstractQuery} queryCtor
      */
     register (queryCtor) {
-        this._queries[queryCtor.name] = queryCtor;
+        this._commandsDict[queryCtor.name] = queryCtor;
     }
 
     /**
-     * Check if query with specific name registered in factory
+     * Check if query with specific cmd registered in factory
      * @param {string} name
      * @returns {boolean}
      */
     isQuery (name) {
-        return this._queries[name] ? true : false;
+        return this._commandsDict[name] ? true : false;
     }
 
     /**
@@ -35,6 +35,6 @@ export class QueryFactory {
             // TODO: write custom error
             throw new Error(`Query ${name} not registered in this node`);
         }
-        return this._queries[name].create(data);
+        return this._commandsDict[name].create(data);
     }
 }

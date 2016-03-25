@@ -7,18 +7,18 @@ export class AbstractCqrsCommand {
 
     /**
      *
-     * @param {string} name
+     * @param {string} cmd
      */
-    constructor (name) {
-        this._name = name;
+    constructor (cmd) {
+        this._cmd = cmd;
     }
 
     /**
-     * Returns name of the command
+     * Returns cmd of the command
      * @type {string}
      */
-    get name () {
-        return this._name
+    get cmd () {
+        return this._cmd
     }
 
     /**
@@ -30,12 +30,13 @@ export class AbstractCqrsCommand {
     }
 
     /**
-     * Serialize command to JSON
-     * @returns {{name: string, data: Object}}
+     * Serialize command to flat object
+     * @returns {{cmd: string, data: Object}}
      */
-    toJSON () {
+    toObject () {
         return {
-            name: this.name,
+            type: this.constructor.name,
+            cmd: this.cmd,
             data: this.data
         }
     }
@@ -45,7 +46,7 @@ export class AbstractCqrsCommand {
      * @returns {string}
      */
     toString () {
-        return JSON.stringify(this.toJSON());
+        return JSON.stringify(this.toObject());
     }
 
 }

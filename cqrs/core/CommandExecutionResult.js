@@ -15,7 +15,7 @@ export class CommandExecutionResult extends AbstractCommandExecutionResult {
      */
     constructor (command, data, error = null) {
         if (!(command instanceof CqrsCommand)) {
-            throw new TypeMismatchError(CqrsCommand.name, command);
+            throw new TypeMismatchError(CqrsCommand.cmd, command);
         }
         if (error === null && data !== null) {
             throw new Error(`Command execution result can't have both data and error at the same time`);

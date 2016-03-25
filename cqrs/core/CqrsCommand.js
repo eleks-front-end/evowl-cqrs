@@ -7,10 +7,10 @@ export class CqrsCommand extends AbstractCqrsCommand {
 
     /**
      *
-     * @param {string} name Name of the command
+     * @param {string} cmd Name of the command
      */
-    constructor (name) {
-        super(name);
+    constructor (cmd) {
+        super(cmd);
 
         /**
          * Stores data related to the command
@@ -42,7 +42,8 @@ export class CqrsCommand extends AbstractCqrsCommand {
      */
     toObject () {
         return {
-            commandName: this.name,
+            type: this.constructor.name,
+            name: this.cmd,
             data: this.data
         }
     }

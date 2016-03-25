@@ -9,7 +9,7 @@ export class PingCommand extends AbstractCqrsCommand {
      *
      * @returns {string}
      */
-    static get name () {
+    static get cmd () {
         return 'foo.ping';
     }
 
@@ -29,7 +29,7 @@ export class PingCommand extends AbstractCqrsCommand {
      * @param {string} byWho
      */
     constructor (requestID, targetID, byWho) {
-        super(PingCommand.name);
+        super(PingCommand.cmd);
 
         this._requestID = requestID;
         this._targetID = targetID;
@@ -40,8 +40,8 @@ export class PingCommand extends AbstractCqrsCommand {
      *
      * @returns {string}
      */
-    get name () {
-        return PingCommand.name;
+    get cmd () {
+        return PingCommand.cmd;
     }
 
     /**
@@ -68,12 +68,12 @@ export class PingCommand extends AbstractCqrsCommand {
 
     /**
      * Return object that contains all data related to command
-     * @returns {{name: string, targetID: uuid, byWho: string}}
+     * @returns {{cmd: string, targetID: uuid, byWho: string}}
      */
     get data () {
         return {
             requestID: this.requestID,
-            name: this.name,
+            name: this.cmd,
             targetID: this.targetID,
             byWho: this.byWho
         }

@@ -12,7 +12,7 @@ export class AbstractQuery {
     }
 
     /**
-     * Returns name of the query
+     * Returns cmd of the query
      * @returns {string}
      */
     get name () {

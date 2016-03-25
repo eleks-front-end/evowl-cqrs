@@ -21,6 +21,8 @@ export class Application {
             denormalizers: {}
         };
         this._ready = null;
+        this._logger = config.logger;
+        this._localLogger = this._logger.getInterface(this.constructor.name);
     }
 
     /**
@@ -37,6 +39,8 @@ export class Application {
      * @returns {Promise} Ready promise
      */
     init () {
+        this._localLogger.info('Start app initialization', null, 'init');
+
         const runtime = this.runtime;
         const config = this._config;
 
@@ -54,6 +58,7 @@ export class Application {
 
         this._ready = rabbitMQConnector.connect().then(() => {
             commandBus = runtime.commandBus = new config.commandBus(
+                this._logger,
                 rabbitMQConnector,
                 config.commandBusExchange,
                 commandFactory
@@ -64,6 +69,8 @@ export class Application {
 
             config.features.forEach(
                 feature => {
+                    this._localLogger.info(`Loading feature ${feature.name}`, {version: feature.version}, 'init');
+
                     //commands
                     feature.commandHandlers.forEach(ch => commandBus.registerCommandHandler(new ch(aggregateRepository)));
                     feature.commands.forEach(cmd => commandFactory.registerCommand(cmd));
@@ -78,9 +85,14 @@ export class Application {
                     });
                 }
             );
-        });
-
-
+        }).then(
+            () => this._localLogger.info('App initialization finished, App ready to use', null, 'init')
+        ).catch(
+            error => {
+                this._localLogger.emerg('App initialization failed', error, 'init');
+                throw error;
+            }
+        );
 
         return this._ready;
     }
