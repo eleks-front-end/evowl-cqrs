@@ -13,7 +13,7 @@ export class PingPongView extends AbstractView {
     static restore (data) {
         const instance = new PingPongView(data.requestID, data.ping.targetID, data.ping.byWho);
         if (data.pong) {
-            instance.setPong(data.dt, data.answer);
+            instance.setPong(data.pong.dt, data.pong.answer);
         }
         return instance;
     }
@@ -77,7 +77,6 @@ export class PingPongView extends AbstractView {
         } else {
             result.status = "waiting pong";
         }
-
         return JSON.parse(JSON.stringify(result));
     }
 }

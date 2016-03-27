@@ -5,7 +5,7 @@
   "main": "loader.js",
   "scripts": {
     "build": "rm -rf build; babel . --ignore node_modules -d build",
-    "builded": "./build/temp-loader.js",
+    "built": "./build/temp-loader.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,5 +27,10 @@
     "babel-cli": "^6.5.1",
     "babel-plugin-transform-es2015-destructuring": "^6.5.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.5.2"
+  },
+  "dependencies": {
+    "amqplib": "^0.4.1",
+    "babel-plugin-transform-es2015-destructuring": "^6.6.4",
+    "babel-plugin-transform-es2015-parameters": "^6.6.4"
   }
 }

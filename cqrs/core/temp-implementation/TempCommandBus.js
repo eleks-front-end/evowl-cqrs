@@ -13,7 +13,7 @@ export class TempCommandBus extends AbstractCommandBus {
 
     /**
      * Execute command, return promise that will be resoved with executeion result.
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      */
     execute (command) {
         const ch = this._commandHandlers.find(ch => ch.match(command));

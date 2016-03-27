@@ -47,7 +47,7 @@ export class PingPongDenormalizer extends AbstractDenormalizer {
      * @private
      */
     on_Ping (event) {
-        const view = new PingPongView(event.requestID, event.targetID, event.byWho);
+        const view = new PingPongView(event.requestID, event.aggregateID, event.byWho);
         this._vr.put(view);
     }
 
@@ -75,7 +75,7 @@ export class PingPongDenormalizer extends AbstractDenormalizer {
 
     /**
      *
-     * @returns {Array.<AbstractEventHandler>}
+     * @returns {Array.<AbstractCqrsEventHandler>}
      */
     get eventHandlers () {
         return this._eventHandlers;

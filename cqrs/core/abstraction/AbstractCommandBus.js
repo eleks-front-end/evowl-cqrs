@@ -6,7 +6,7 @@ import {NotImplementedError} from '../errors/NotImplementedError';
 export class AbstractCommandBus {
     /**
      * Execute command, return promise that will be resolved with execution result.
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      * @returns {Promise.<AbstractCommandExecutionResult>}
      */
     execute (command) {

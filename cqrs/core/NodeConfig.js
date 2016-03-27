@@ -11,22 +11,16 @@ export class NodeConfig {
 
     constructor () {
         this._features = [];
-    }
-
-    /**
-     * Add new feature to configuration
-     * @param {Feature} feature
-     */
-    addFeature (feature) {
-        this._features.push(feature);
-    }
-
-    /**
-     *
-     * @returns {Array.<Feature>}
-     */
-    get features () {
-        return this._features;
+        this._aggregateRepository = null;
+        this._commandBus = null;
+        this._ESAdapter = null;
+        this._queryBus = null;
+        this._viewRepository = null;
+        this._eventBus = null;
+        this._rabbitMQConnector = null;
+        this._rabbitMQHost = null;
+        this._commandBusExchange = null;
+        this._logger = null;
     }
 
     /**
@@ -44,6 +38,30 @@ export class NodeConfig {
      */
     get aggregateRepository () {
         return this._aggregateRepository;
+    }
+
+    /**
+     *
+     * @param {string} value
+     */
+    set commandBusExchange (value) {
+        this._commandBusExchange = value;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get commandBusExchange () {
+        return this._commandBusExchange;
+    }
+
+    /**
+     *
+     * @returns {Array.<Feature>}
+     */
+    get features () {
+        return this._features;
     }
 
 
@@ -65,6 +83,22 @@ export class NodeConfig {
     }
 
     /**
+     *
+     * @param {AbstractEventBus} value
+     */
+    set eventBus (value) {
+        this._eventBus = value;
+    }
+
+    /**
+     *
+     * @returns {AbstractEventBus}
+     */
+    get eventBus () {
+        return this._eventBus;
+    }
+
+    /**
      * @param {AbstractEventStoreAdapter} value
      */
     set eventStoreAdapter (value) {
@@ -79,6 +113,22 @@ export class NodeConfig {
      */
     get eventStoreAdapter () {
         return this._ESAdapter;
+    }
+
+    /**
+     *
+     * @param {Logger} value
+     */
+    set logger (value) {
+        this._logger = value;
+    }
+
+    /**
+     *
+     * @returns {Logger}
+     */
+    get logger () {
+        return this._logger;
     }
 
     /**
@@ -99,6 +149,38 @@ export class NodeConfig {
 
     /**
      *
+     * @param {RabbitMQConnector} value
+     */
+    set rabbitMQConnector (value) {
+        this._rabbitMQConnector = value;
+    }
+
+    /**
+     *
+     * @type {RabbitMQConnector}
+     */
+    get rabbitMQConnector () {
+        return this._rabbitMQConnector;
+    }
+
+    /**
+     *
+     * @param {string} value
+     */
+    set rabbitMQHost (value) {
+        this._rabbitMQHost = value;
+    }
+
+    /**
+     *
+     * @returns {string}
+     */
+    get rabbitMQHost () {
+        return this._rabbitMQHost;
+    }
+
+    /**
+     *
      * @param {AbstractViewRepository} value
      */
     set viewRepository (value) {
@@ -114,19 +196,11 @@ export class NodeConfig {
     }
 
     /**
-     *
-     * @param {AbstractEventBus} value
+     * Add new feature to configuration
+     * @param {Feature} feature
      */
-    set eventBus (value) {
-        this._eventBus = value;
-    }
-
-    /**
-     *
-     * @returns {AbstractEventBus}
-     */
-    get eventBus () {
-        return this._eventBus;
+    addFeature (feature) {
+        this._features.push(feature);
     }
 
     /**

@@ -10,7 +10,7 @@ export class TempCommandExecutionResult extends AbstractCommandExecutionResult {
 
     /**
      *
-     * @param {AbstractCommand} command
+     * @param {AbstractCqrsCommand} command
      * @param {TempCommandExecutionSuccess|TempCommandExecutionError} value
      */
     constructor (command, value) {
@@ -37,7 +37,7 @@ export class TempCommandExecutionResult extends AbstractCommandExecutionResult {
      * @returns {boolean}
      */
     get isSuccess () {
-        return (this._value instanceof TempCommandExecutionSuccess) ? true : false;
+        return !!(this._value instanceof TempCommandExecutionSuccess);
     }
 
 
@@ -45,6 +45,6 @@ export class TempCommandExecutionResult extends AbstractCommandExecutionResult {
      * @returns {boolean}
      */
     get isError () {
-        return (this._value instanceof TempCommandExecutionError) ? true : false;
+        return !!(this._value instanceof TempCommandExecutionError);
     }
 }
